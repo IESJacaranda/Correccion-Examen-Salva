@@ -1,4 +1,4 @@
-package Contestador;
+package Ejercicio2;
 
 public class Main {
 
