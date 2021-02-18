@@ -1,4 +1,5 @@
 package Contestador;
+import java.time.temporal.ChronoUnit;
 
 public class Contestador {
 	
@@ -7,7 +8,6 @@ public class Contestador {
 		public static final String CONTESTADOR_LLENO = "El buzón está lleno, borre algún mensaje"; 
 		public static final String MENSAJE_NO_EXISTE = "El mensaje seleccionado no existe"; 
 	// <--
-		
 	private Mensaje mensaje1;
 	private Mensaje mensaje2;
 	private Mensaje mensaje3;
@@ -38,14 +38,14 @@ public class Contestador {
 		return mensaje1;
 	}
 
-	public Mensaje getMensaje2() {
+	public Mensaje getMensaje2() throws Exception{
 		if (mensaje2 == null) {
 			throw new Exception(MENSAJE_NO_EXISTE);
 		}
 		return mensaje2;
 	}
 
-	public Mensaje getMensaje3() {
+	public Mensaje getMensaje3() throws Exception{
 		if (mensaje3 == null) {
 			throw new Exception(MENSAJE_NO_EXISTE);
 		}
@@ -115,19 +115,69 @@ public class Contestador {
 	}  
 	
 	public Mensaje mensajeMasNuevo() throws Exception{
+		Mensaje masnuevo = null;
 		if (numeroDeMensajes() == 0) {
 			throw new Exception(NO_MENSAJES);
 		}
-		// No finish
+		if ((masnuevo == null || mensaje1.getFecha().isAfter(mensajeMasNuevo().getFecha())) && mensaje1 != null) {
+			masnuevo = mensaje1;
+		}
+		if ((masnuevo == null || mensaje2.getFecha().isAfter(mensajeMasNuevo().getFecha())) && mensaje2 != null) {
+			masnuevo = mensaje2;
+		}
+		if ((masnuevo == null || mensaje3.getFecha().isAfter(mensajeMasNuevo().getFecha())) && mensaje3 != null) {
+			masnuevo = mensaje3;
+		}
+		return masnuevo;
 	}
-	public Mensaje mensajeMasViejo() {
+	public Mensaje mensajeMasViejo() throws Exception{
+		Mensaje masviejo = null;
 		if (numeroDeMensajes() == 0) {
 			throw new Exception(NO_MENSAJES);
 		}
-		// No finish
+		if ((masviejo == null || mensaje1.getFecha().isBefore(mensajeMasNuevo().getFecha())) && mensaje1 != null) {
+			masviejo = mensaje1;
+		}
+		if ((masviejo == null || mensaje2.getFecha().isBefore(mensajeMasNuevo().getFecha())) && mensaje2 != null) {
+			masviejo = mensaje2;
+		}
+		if ((masviejo == null || mensaje3.getFecha().isBefore(mensajeMasNuevo().getFecha())) && mensaje3 != null) {
+			masviejo = mensaje3;
+		}
+		return masviejo;
 	}
-	public int diasEntreMensajes {
-		// No finish
+	public int diasEntreMensajes() throws Exception {
+		long numDias;
+		Mensaje mensajeMasNuevo = mensajeMasNuevo();
+		Mensaje mensajeMasViejo = mensajeMasNuevo();
+		numDias = ChronoUnit.DAYS.between(mensajeMasNuevo.getFecha(), mensajeMasViejo.getFecha());
+		return (int) numDias;
+	}
+	public void añadirMensaje(StringBuilder remitente, StringBuilder msg) throws Exception{
+		if (this.numeroDeMensajes() == 3) {
+			throw new Exception("Buzón lleno");
+		}
+		if (this.mensaje1 == null) {
+			this.mensaje1 = new Mensaje(remitente, msg);
+		}
+		else if (this.mensaje2 == null) {
+			this.mensaje2 = new Mensaje(remitente, msg);
+		}
+		else if (this.mensaje3 == null){
+			this.mensaje3 = new Mensaje(remitente, msg);
+		}
+}
+	public void anadirBorrando(StringBuilder remitente, StringBuilder msg) throws Exception{
+		Mensaje masviejo = mensajeMasViejo();
+		if (this.mensaje1.equals(masviejo)) {
+			this.mensaje1 = new Mensaje(remitente, msg);
+		}
+		else if (this.mensaje2.equals(masviejo)) {
+			this.mensaje2 = new Mensaje(remitente, msg);
+		}
+		else {
+			this.mensaje3 = new Mensaje(remitente, msg);
+		}
 	}
 }
 
