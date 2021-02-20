@@ -1,9 +1,11 @@
 package Contestador;
-import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
+import static java.time.temporal.ChronoUnit.DAYS;
+
+import java.time.LocalDateTime;
 
 public class Contestador {
-	
+		private static final LocalDateTime FECHA_MAXIMA = LocalDateTime.of(2999, 12, 12, 12, 12);
+		private static final LocalDateTime FECHA_MINIMA = LocalDateTime.of(1970, 12, 12, 12, 12);
 	// Mensajes de error -->
 		private static final String NO_MENSAJES = "No hay mensajes"; 
 		private static final String CONTESTADOR_LLENO = "El buzón está lleno, borre algún mensaje"; 
@@ -118,13 +120,13 @@ public class Contestador {
 		if (numeroDeMensajes() == 0) {
 			throw new Exception(NO_MENSAJES);
 		}
-		if ((masnuevo == null || mensaje1.getFecha().isAfter(mensajeMasNuevo().getFecha())) && mensaje1 != null) {
+		if (mensaje1 != null && (masnuevo == null || mensaje1.getFecha().isAfter(FECHA_MINIMA))) {
 			masnuevo = mensaje1;
 		}
-		if ((masnuevo == null || mensaje2.getFecha().isAfter(mensajeMasNuevo().getFecha())) && mensaje2 != null) {
+		if (mensaje2 != null && (masnuevo == null || mensaje2.getFecha().isAfter(FECHA_MINIMA))) {
 			masnuevo = mensaje2;
 		}
-		if ((masnuevo == null || mensaje3.getFecha().isAfter(mensajeMasNuevo().getFecha())) && mensaje3 != null) {
+		if (mensaje3 != null && (masnuevo == null || mensaje3.getFecha().isAfter(FECHA_MINIMA))) {
 			masnuevo = mensaje3;
 		}
 		return masnuevo;
@@ -134,22 +136,19 @@ public class Contestador {
 		if (numeroDeMensajes() == 0) {
 			throw new Exception(NO_MENSAJES);
 		}
-			if ((masviejo == null || mensaje1.getFecha().isAfter(mensajeMasNuevo().getFecha())) && mensaje1 != null) {
+			if (mensaje1 != null && (masviejo == null || mensaje1.getFecha().isAfter(FECHA_MAXIMA))) {
 				masviejo = mensaje1;
 			}
-			if ((masviejo == null || mensaje2.getFecha().isAfter(mensajeMasNuevo().getFecha())) && mensaje2 != null) {
+			if (mensaje2 != null && (masviejo == null || mensaje2.getFecha().isAfter(FECHA_MAXIMA))) {
 				masviejo = mensaje2;
 			}
-			if ((masviejo == null || mensaje3.getFecha().isAfter(mensajeMasNuevo().getFecha())) && mensaje3 != null) {
+			if (mensaje3 != null && (masviejo == null || mensaje3.getFecha().isAfter(FECHA_MAXIMA))) {
 				masviejo = mensaje3;
 			}
 		return masviejo;
 	}
 	public int diasEntreMensajes() throws Exception {
-		long numDias;
-		Mensaje mensajeMasNuevo = mensajeMasNuevo();
-		Mensaje mensajeMasViejo = mensajeMasNuevo();
-		numDias = ChronoUnit.DAYS.between(mensajeMasNuevo.getFecha(), mensajeMasViejo.getFecha());
+		long numDias = DAYS.between(mensajeMasNuevo().getFecha(), mensajeMasNuevo().getFecha());
 		return (int) numDias;
 	}
 	public void añadirMensaje(StringBuilder remitente, StringBuilder msg) throws Exception{

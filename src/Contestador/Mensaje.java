@@ -1,14 +1,19 @@
 package Contestador;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Mensaje {
+
 	public static Integer nextCode = 1;
 	private StringBuilder remitente;
 	private StringBuilder msg;
 	private LocalDateTime fecha;
 	private Integer codigo;
-	
+
+    private static DateTimeFormatter formatoHorasYminutos = DateTimeFormatter.ofPattern("hh-mm");
+    private static DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    
 	public Mensaje(StringBuilder remitente, StringBuilder msg) {
 		super();
 		this.remitente = remitente;
@@ -61,6 +66,6 @@ public class Mensaje {
 
 	@Override
 	public String toString() {
-		return "El " + fecha + " el usuario " + remitente + " dejó el mensaje: " + msg + " con código de mensaje " + codigo;
+		return "El " + fecha.format(formatoFecha) +  " a las " + fecha.format(formatoHorasYminutos) + " el usuario " + remitente + " dejÃ³ el mensaje: ' " + msg + " ' con cÃ³digo de mensaje " + codigo;
 	}	
 }
