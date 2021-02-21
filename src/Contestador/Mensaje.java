@@ -5,42 +5,42 @@ import java.time.format.DateTimeFormatter;
 
 public class Mensaje {
 
-	public static Integer nextCode = 1;
-	private StringBuilder remitente;
-	private StringBuilder msg;
-	private LocalDateTime fecha;
-	private Integer codigo;
+	public static Integer nextCode = 1;											// Esta variable almacenará el siguiente código a establecer para que no haya mensajes con códigos repetidos
+	private StringBuilder remitente;											// Esta variable almacenará el remitente
+	private StringBuilder msg;													// Esta variable almacenará el mensaje
+	private LocalDateTime fecha;												// Esta variable almacenará la fecha del mensaje
+	private Integer codigo;														// Esta variable almacenará el código proporcionado al mensaje
 
-    private static DateTimeFormatter formatoHorasYminutos = DateTimeFormatter.ofPattern("hh-mm");
-    private static DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static final DateTimeFormatter FORMATO_HORAS_Y_MINUTOS= DateTimeFormatter.ofPattern("hh-mm");	// Definimos el formato hora para la fecha
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");		// Definimos el formato fecha para la fecha
     
-	public Mensaje(StringBuilder remitente, StringBuilder msg) {
+	public Mensaje(StringBuilder remitente, StringBuilder msg) {				// Constructor de mensaje
 		super();
-		this.remitente = remitente;
-		this.msg = msg;
-		this.fecha = LocalDateTime.now();
-		this.codigo = nextCode;
-		nextCode++;
+		this.remitente = remitente;												// Establecemos el remitente que nos pasen como argumento
+		this.msg = msg;															// Establecemos el mensaje que nos pasen como argumento
+		this.fecha = LocalDateTime.now();										// Establecemos la fecha actual sel sistema
+		this.codigo = nextCode;													// Establecemos como código el código siguiente
+		nextCode++;																// Incrementamos el código para que el siguiente mensaje que se construya no tenga el mismo código
 	}
 
-	public StringBuilder getRemitente() {
+	public StringBuilder getRemitente() {										// Obtiene el remitente
 		return remitente;
 	}
 
-	public StringBuilder getMsg() {
+	public StringBuilder getMsg() {												// Obtiene el mensaje
 		return msg;
 	}
 
-	public LocalDateTime getFecha() {
+	public LocalDateTime getFecha() {											// Obtiene la fecha del sistema
 		return fecha;
 	}
 
-	public int getCodigo() {
+	public int getCodigo() {													// Obtiene el código del mensaje
 		return codigo;
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode() {														// Hashcode y equals
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
@@ -65,7 +65,7 @@ public class Mensaje {
 	}
 
 	@Override
-	public String toString() {
-		return "El " + fecha.format(formatoFecha) +  " a las " + fecha.format(formatoHorasYminutos) + " el usuario " + remitente + " dejó el mensaje: ' " + msg + " ' con código de mensaje " + codigo;
+	public String toString() {													// ToString
+		return "El " + fecha.format(FORMATO_FECHA) +  " a las " + fecha.format(FORMATO_HORAS_Y_MINUTOS) + " el usuario " + remitente + " dejó el mensaje: ' " + msg + " ' con código de mensaje " + codigo;
 	}	
 }
