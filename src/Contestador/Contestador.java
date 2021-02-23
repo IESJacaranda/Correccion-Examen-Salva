@@ -153,7 +153,7 @@ public class Contestador {
 		return masviejo;
 	}
 	public int diasEntreMensajes() throws Exception {											// Días entre mensajes
-		long numDias = DAYS.between(mensajeMasNuevo().getFecha(), mensajeMasNuevo().getFecha()); // Creamos una variable de tipo long la cual almacenará los días entre las dos fechas, para obtener la fecha usamos la funcion DAYS.between a la cual le pasamos la fecha del mensaje mas nuevo y la fecha del mensaje más antiguo 
+		long numDias = DAYS.between(mensajeMasNuevo().getFecha(), mensajeMasViejo().getFecha()); // Creamos una variable de tipo long la cual almacenará los días entre las dos fechas, para obtener la fecha usamos la funcion DAYS.between a la cual le pasamos la fecha del mensaje mas nuevo y la fecha del mensaje más antiguo 
 		return (int) numDias;																		// Retornamos el resultado como un entero
 	}
 	public void añadirMensaje(StringBuilder remitente, StringBuilder msg) throws Exception{		// Añadir mensaje
