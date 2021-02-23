@@ -171,15 +171,20 @@ public class Contestador {
 		}
 }
 	public void anadirBorrando(StringBuilder remitente, StringBuilder msg) throws Exception{	// Añadir borrando
-		Mensaje masviejo = mensajeMasViejo();														// Creamos un nuevo Mensaje el cual almacenará el mensaje más viejo 
-		if (mensaje1.equals(masviejo)) {															// Comprobamos si el mensaje1 es el más viejo y si es así lo almacenamos
-			mensaje1 = new Mensaje(remitente, msg);
+		try {																							// Intentamos añadir el mensaje si hay hueco libre
+			añadirMensaje(remitente, msg);
 		}
-		else if (mensaje2.equals(masviejo)) {														// Comprobamos si el mensaje2 es el más viejo y si es así lo almacenamos
-			mensaje2 = new Mensaje(remitente, msg);
-		}
-		else {																						// Comprobamos si el mensaje3 es el más viejo y si es así lo almacenamos
-			mensaje3 = new Mensaje(remitente, msg);
+		catch(Exception e) {																			// Si no intentamos añadir borrando
+			Mensaje masviejo = mensajeMasViejo();														// Creamos un nuevo Mensaje el cual almacenará el mensaje más viejo 
+			if (mensaje1.equals(masviejo)) {															// Comprobamos si el mensaje1 es el más viejo y si es así lo almacenamos
+				mensaje1 = new Mensaje(remitente, msg);
+			}
+			else if (mensaje2.equals(masviejo)) {														// Comprobamos si el mensaje2 es el más viejo y si es así lo almacenamos
+				mensaje2 = new Mensaje(remitente, msg);
+			}
+			else {																						// Comprobamos si el mensaje3 es el más viejo y si es así lo almacenamos
+				mensaje3 = new Mensaje(remitente, msg);
+			}
 		}
 	}
 }
